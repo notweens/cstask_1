@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -81,7 +81,7 @@ namespace ConsoleApp1
 
             while (true)
             {
-                Console.WriteLine("Введите имя клиента и нажмите Enter:");
+                Console.WriteLine("Р’РІРµРґРёС‚Рµ РёРјСЏ РєР»РёРµРЅС‚Р° Рё РЅР°Р¶РјРёС‚Рµ Enter:");
 
                 clientId = -1;
                 clientName = "";
@@ -118,7 +118,7 @@ namespace ConsoleApp1
                             }
                             else
                             {
-                                Console.WriteLine("Нет данных");
+                                Console.WriteLine("РќРµС‚ РґР°РЅРЅС‹С…");
                             }
                         }
                     }
@@ -126,24 +126,24 @@ namespace ConsoleApp1
                     List<Order> clientOrders = orders.FindAll(i => i.Buyer == clientId);
                     uint totalPrice = 0, counter = 0;
 
-                    Console.WriteLine("Найдено заказов: {0}", clientOrders.Count);
+                    Console.WriteLine("РќР°Р№РґРµРЅРѕ Р·Р°РєР°Р·РѕРІ: {0}", clientOrders.Count);
 
                     foreach (var order in clientOrders)
                     {
                         Console.WriteLine("-----");
-                        Console.WriteLine("Заказ №{0}, Дата создания {1}", order.Id, order.Date.ToShortDateString());
-                        Console.WriteLine("Состав:");
+                        Console.WriteLine("Р—Р°РєР°Р· в„–{0}, Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ {1}", order.Id, order.Date.ToShortDateString());
+                        Console.WriteLine("РЎРѕСЃС‚Р°РІ:");
                         
                         foreach (KeyValuePair<Product, uint> item in order.Items)
                         {
                             totalPrice = item.Value * item.Key.Price;
                             
-                            Console.WriteLine("{0} - {1} руб. ({2} шт.) - {3} руб.", item.Key.Name, item.Key.Price, item.Value, totalPrice);
+                            Console.WriteLine("{0} - {1} СЂСѓР±. ({2} С€С‚.) - {3} СЂСѓР±.", item.Key.Name, item.Key.Price, item.Value, totalPrice);
 
                             counter += totalPrice;
                         }
 
-                        Console.WriteLine("Общая стоимость: {0} руб.", counter);
+                        Console.WriteLine("РћР±С‰Р°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ: {0} СЂСѓР±.", counter);
                         Console.WriteLine("-----");
                     }
 
