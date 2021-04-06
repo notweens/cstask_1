@@ -1,0 +1,74 @@
+USE [db]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[clients](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nchar](64) NOT NULL,
+ CONSTRAINT [PK_clients] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[orders](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[buyer] [int] NULL,
+	[date] [date] NOT NULL,
+ CONSTRAINT [PK_orders] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[orders]  WITH CHECK ADD  CONSTRAINT [FK_orders_clients] FOREIGN KEY([buyer])
+REFERENCES [dbo].[clients] ([id])
+GO
+
+ALTER TABLE [dbo].[orders] CHECK CONSTRAINT [FK_orders_clients]
+GO
+
+CREATE TABLE [dbo].[orderspos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[orderId] [int] NOT NULL,
+	[productId] [int] NOT NULL,
+	[amount] [int] NOT NULL,
+ CONSTRAINT [PK_orderspos] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[orderspos]  WITH CHECK ADD  CONSTRAINT [FK_orderspos_orders] FOREIGN KEY([orderId])
+REFERENCES [dbo].[orders] ([id])
+GO
+
+ALTER TABLE [dbo].[orderspos] CHECK CONSTRAINT [FK_orderspos_orders]
+GO
+
+ALTER TABLE [dbo].[orderspos]  WITH CHECK ADD  CONSTRAINT [FK_orderspos_products] FOREIGN KEY([productId])
+REFERENCES [dbo].[products] ([id])
+GO
+
+ALTER TABLE [dbo].[orderspos] CHECK CONSTRAINT [FK_orderspos_products]
+GO
+
+CREATE TABLE [dbo].[products](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](64) NOT NULL,
+	[cost] [int] NOT NULL,
+ CONSTRAINT [PK_products] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
